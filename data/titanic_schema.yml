@@ -1,0 +1,25 @@
+survived:
+  type: int
+  na_value: -1
+  encoding: ''
+  target: true
+class:
+  type: int
+  na_value: -1
+  encoding: OneHotEncoder
+  target: false
+sex:
+  type: str
+  na_value: ''
+  encoding: OneHotEncoder
+  target: false
+age:
+  type: float
+  na_value: 0
+  encoding: ''
+  target: false
+embarked:
+  type: str
+  na_value: ''
+  encoding: OneHotEncoder
+  target: false

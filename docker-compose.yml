@@ -1,0 +1,35 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:11.1
+    environment:
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+  minio:
+    image: minio/minio:latest
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    ports:
+      - 9000:9000
+    command: server ./docker-data/docker-minio
+  filldata:
+    build: .
+    depends_on:
+      - postgres
+      - minio
+    command: filldata
+  model:
+    build: .
+    depends_on:
+      - filldata
+    command: model
+  deploy:
+    build: .
+    ports:
+      - 1234:1234
+    depends_on:
+      - model
+    command: deploy
